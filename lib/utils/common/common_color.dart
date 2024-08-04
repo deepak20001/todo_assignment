@@ -8,4 +8,5 @@ class CommonColor {
   static const Color errorColor = Colors.red;
   static const Color blueColor = Color(0xff0000FF);
   static const Color successColor = Color(0xff22bb33);
+  static const Color greyColor = Colors.grey;
 }

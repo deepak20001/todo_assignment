@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:todo_assignment/features/add_edit_task/cubits/add_edit_task_cubit.dart';
+import 'package:todo_assignment/features/add_edit_task/cubits/add_edit_task_state.dart';
 import 'package:todo_assignment/features/add_edit_task/widgets/priority_level_bottom_sheet.dart';
 import 'package:todo_assignment/features/add_edit_task/widgets/show_date_picker_dialog.dart';
 import 'package:todo_assignment/features/add_edit_task/widgets/show_time_picker_bottom_sheet.dart';
+import 'package:todo_assignment/utils/common/common_color.dart';
 import 'package:todo_assignment/utils/common/common_const.dart';
 import 'package:todo_assignment/utils/common/common_form_validation.dart';
 import 'package:todo_assignment/utils/common/widgets/custom_space.dart';
@@ -22,82 +26,87 @@ Widget buildAddEditTaskFormField(
   if (dueDateController.text.trim().isEmpty) {
     dueDateController.text = DateFormat('dd-MMM-yyyy').format(DateTime.now());
   }
-  return Column(
-    children: [
-      CustomTextFormField(
-        size: size,
-        controller: titleController,
-        hintText: 'Title',
-        validation: (value) {
-          return CommonFormValidation.nameValidator(value, 'Name');
-        },
-      ),
-      verticalSpace(size.width * numD03),
-      CustomTextFormField(
-        size: size,
-        controller: descriptionController,
-        hintText: 'Description',
-        maxLines: 4,
-        validation: (value) {
-          return CommonFormValidation.nameValidator(value, 'Description');
-        },
-      ),
-      verticalSpace(size.width * numD03),
-      CustomTextFormField(
-        size: size,
-        controller: priorityLevelController,
-        isRead: true,
-        hintText: 'Priority level',
-        onTap: () {
-          priorityLevelBottomSheet(
-            context,
-            size,
-            ['Urgent-Priority', 'Medium-Priority', 'Least-Priority'],
-            (priority) {
-              priorityLevelController.text = priority;
+  return BlocBuilder<AddEditTaskCubit, AddEditTaskState>(
+    builder: (context, state) {
+      return Column(
+        children: [
+          CustomTextFormField(
+            size: size,
+            controller: titleController,
+            hintText: 'Title',
+            validation: (value) {
+              return CommonFormValidation.nameValidator(value, 'Name');
             },
-          );
-        },
-        validation: (value) {
-          return CommonFormValidation.nameValidator(value, 'Priority level');
-        },
-      ),
-      verticalSpace(size.width * numD03),
-      CustomTextFormField(
-        size: size,
-        controller: dueDateController,
-        isRead: true,
-        hintText: 'Due Date',
-        validation: (value) {
-          return CommonFormValidation.nameValidator(value, 'Due Date');
-        },
-        onTap: () {
-          showDatePickerDialog(
-            context,
-            size,
-            dueDateController,
-            dateController,
-          );
-        },
-      ),
-      verticalSpace(size.width * numD03),
-      CustomTextFormField(
-        size: size,
-        controller: addReminderController,
-        isRead: true,
-        hintText: 'Add reminder',
-        validation: (value) {
-          return CommonFormValidation.nameValidator(value, 'Add reminder');
-        },
-        onTap: () {
-          showTimePickerBottomSheet(
-            context,
-            size,
-            addReminderController,
-            dueDateController,
-          );
-        },
-      ),
-    ],
+          ),
+          verticalSpace(size.width * numD03),
+          CustomTextFormField(
+            size: size,
+            controller: descriptionController,
+            hintText: 'Description',
+            maxLines: 4,
+            validation: (value) {
+              return CommonFormValidation.nameValidator(value, 'Description');
+            },
+          ),
+          verticalSpace(size.width * numD03),
+          CustomTextFormField(
+            size: size,
+            controller: priorityLevelController,
+            isRead: true,
+            hintText: 'Priority level',
+            onTap: () {
+              priorityLevelBottomSheet(
+                context,
+                size,
+                ['Urgent-Priority', 'Medium-Priority', 'Least-Priority'],
+                (priority) {
+                  priorityLevelController.text = priority;
+                },
+              );
+            },
+            validation: (value) {
+              return CommonFormValidation.nameValidator(
+                  value, 'Priority level');
+            },
+          ),
+          verticalSpace(size.width * numD03),
+          CustomTextFormField(
+            size: size,
+            controller: dueDateController,
+            isRead: true,
+            hintText: 'Due Date',
+            validation: (value) {
+              return CommonFormValidation.nameValidator(value, 'Due Date');
+            },
+            onTap: () {
+              showDatePickerDialog(
+                context,
+                size,
+                dueDateController,
+                dateController,
+              );
+            },
+          ),
+          verticalSpace(size.width * numD03),
+          CustomTextFormField(
+            size: size,
+            controller: addReminderController,
+            isRead: true,
+            hintText: 'Add reminder',
+            validation: (value) {
+              return CommonFormValidation.nameValidator(value, 'Add reminder');
+            },
+            onTap: () {
+              showTimePickerBottomSheet(
+                context,
+                size,
+                addReminderController,
+                dueDateController,
+              );
+            },
+          ),
+        ],
+      );
+    },
   );
 }

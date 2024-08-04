@@ -112,13 +112,7 @@ void onTimeSubmitTap(
     DateTime now = DateTime.now();
     final selectedDateTime =
         DateTime(now.year, now.month, now.day, now.hour, now.minute);
-    if (selectedDateTime.isBefore(now)) {
-      showSnackBar(context, 'Please select a time after the current time.',
-          CommonColor.errorColor, CommonColor.whiteColor);
-    } else {
-      addReminderController.text =
-          DateFormat('h:mm a').format(selectedDateTime);
-    }
+    addReminderController.text = DateFormat('h:mm a').format(selectedDateTime);
   } else {
     addReminderController.text =
         DateFormat('h:mm a').format(DateTime.parse(index.toString()));

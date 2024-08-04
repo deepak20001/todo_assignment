@@ -14,8 +14,16 @@ class ShowTasksLoading extends ShowTasksState {}
 
 class ShowTasksLoaded extends ShowTasksState {
   final List<TaskModel> tasks;
+  final List<TaskModel> urgentPriorityTasks;
+  final List<TaskModel> mediumPriorityTasks;
+  final List<TaskModel> leastPriorityTasks;
 
-  const ShowTasksLoaded(this.tasks);
+  const ShowTasksLoaded(
+    this.tasks,
+    this.urgentPriorityTasks,
+    this.mediumPriorityTasks,
+    this.leastPriorityTasks,
+  );
 
   @override
   List<Object> get props => [tasks];

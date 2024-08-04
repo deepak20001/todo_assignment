@@ -33,7 +33,6 @@ void priorityLevelBottomSheet(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-
               /// title, close-button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,9 +77,25 @@ void priorityLevelBottomSheet(
                       },
                       child: SizedBox(
                         width: size.width,
-                        child: CustomText(
-                          title: listData[index],
-                          fontSize: size.width * numD038,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              title: listData[index],
+                              fontSize: size.width * numD038,
+                            ),
+                            IconButton(
+                              onPressed: null,
+                              icon: Icon(
+                                Icons.flag,
+                                color: (listData[index] == 'Urgent-Priority')
+                                    ? CommonColor.errorColor
+                                    : (listData[index] == 'Medium-Priority')
+                                        ? CommonColor.blueColor
+                                        : CommonColor.successColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );

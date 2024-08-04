@@ -50,7 +50,7 @@ class AddEditTaskCubit extends Cubit<AddEditTaskState> {
     try {
       dbService.addTaskInDb(task: task);
       emit(AddEditTaskSuccess());
-      Routes.pushReplacement(
+      Routes.pushAndRemoveUntil(
           widget: const ShowTasksScreen(),
           context: navigatorKey.currentContext!);
       showSnackBar(
@@ -71,7 +71,7 @@ class AddEditTaskCubit extends Cubit<AddEditTaskState> {
     try {
       dbService.updateTask(task);
       emit(AddEditTaskSuccess());
-      Routes.pushReplacement(
+      Routes.pushAndRemoveUntil(
           widget: const ShowTasksScreen(),
           context: navigatorKey.currentContext!);
       showSnackBar(

@@ -3,14 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todo_assignment/features/add_edit_task/screens/add_edit_task_screen.dart';
+import 'package:todo_assignment/features/search_task/screens/search_task_screen.dart';
 import 'package:todo_assignment/features/show_tasks/cubit/show_task_cubit.dart';
 import 'package:todo_assignment/features/show_tasks/cubit/show_task_state.dart';
 import 'package:todo_assignment/features/show_tasks/widgets/edit_delete_bottom_sheet.dart';
+import 'package:todo_assignment/features/show_tasks/widgets/priority_tasks.dart';
 import 'package:todo_assignment/utils/common/common_color.dart';
 import 'package:todo_assignment/utils/common/common_const.dart';
 import 'package:todo_assignment/utils/common/common_route.dart';
 import 'package:todo_assignment/utils/common/common_utils.dart';
+import 'package:todo_assignment/utils/common/models/task_model.dart';
+import 'package:todo_assignment/utils/common/widgets/custom_space.dart';
 import 'package:todo_assignment/utils/common/widgets/custom_text.dart';
+import 'package:todo_assignment/utils/common/widgets/custom_text_form_field.dart';
 
 class ShowTasksScreen extends StatelessWidget {
   const ShowTasksScreen({super.key});
@@ -30,6 +35,21 @@ class ShowTasksScreen extends StatelessWidget {
             fontSize: size.width * numD05,
             fontWeight: FontWeight.bold,
           ),
+          actions: [
+            BlocBuilder<ShowTasksCubit, ShowTasksState>(
+              builder: (context, state) {
+                return IconButton(
+                  onPressed: () {
+                    Routes.push(widget: const SearchTask(), context: context)
+                        .then(
+                      (val) => context.read<ShowTasksCubit>().initDbService(),
+                    );
+                  },
+                  icon: const Icon(Icons.search),
+                );
+              },
+            ),
+          ],
         ),
 
         /// floating-action-button
@@ -88,66 +108,57 @@ class ShowTasksScreen extends StatelessWidget {
                   ],
                 );
               } else {
-                return ListView.builder(
-                  itemCount: state.tasks.length,
-                  itemBuilder: (context, index) {
-                    final task = state.tasks[index];
-                    return GestureDetector(
-                      onLongPress: () {
-                        debugPrint('LongPressed');
-                        HapticFeedback.vibrate();
-                        editDeleteBottomSheet(
-                          context,
-                          size,
-                          cubitData,
-                          task,
-                        );
-                      },
-                      child: ListTile(
-                        /// check-box
-                        leading: Checkbox(
-                          activeColor: CommonColor.blackColor,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          visualDensity: VisualDensity.compact,
-                          value: task.isCompleted,
-                          onChanged: (val) {
-                            debugPrint('check-boc-val::::$val');
-                            cubitData.toggleTaskCompletion(task, val ?? false);
-                          },
-                        ),
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * numD035),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpace(size.width * numD03),
 
-                        /// title
-                        title: CustomText(
-                          title: task.title,
-                          fontSize: size.width * numD04,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        /// urgent-priority
+                        if (state.urgentPriorityTasks.isNotEmpty) ...[
+                          priorityTasks(
+                            context,
+                            size,
+                            cubitData,
+                            'Urgent Priority',
+                            CommonColor.errorColor,
+                            state.urgentPriorityTasks,
+                          ),
+                          verticalSpace(size.width * numD03),
+                        ],
 
-                        /// description
-                        subtitle: CustomText(
-                          title: task.description,
-                          fontSize: size.width * numD035,
-                        ),
+                        /// medium-priority
+                        if (state.mediumPriorityTasks.isNotEmpty) ...[
+                          priorityTasks(
+                            context,
+                            size,
+                            cubitData,
+                            'Medium Priority',
+                            CommonColor.blueColor,
+                            state.mediumPriorityTasks,
+                          ),
+                          verticalSpace(size.width * numD03),
+                        ],
 
-                        /// due-date, reminder
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              title: task.dueDate,
-                              fontSize: size.width * numD025,
-                            ),
-                            CustomText(
-                              title: task.addReminder,
-                              fontSize: size.width * numD025,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                        /// least-priority
+                        if (state.leastPriorityTasks.isNotEmpty) ...[
+                          priorityTasks(
+                            context,
+                            size,
+                            cubitData,
+                            'Least Priority',
+                            CommonColor.successColor,
+                            state.leastPriorityTasks,
+                          ),
+                          verticalSpace(size.width * numD20),
+                        ],
+                      ],
+                    ),
+                  ),
                 );
               }
             }

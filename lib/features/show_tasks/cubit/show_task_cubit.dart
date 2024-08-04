@@ -26,8 +26,31 @@ class ShowTasksCubit extends Cubit<ShowTasksState> {
     debugPrint('loadTasks-method::::::::::::::::::::::::::::::');
     try {
       emit(ShowTasksLoading());
-      final tasks = dbService.loadTasks();
-      emit(ShowTasksLoaded(tasks));
+      final List<TaskModel> tasks = dbService.loadTasks();
+      List<TaskModel> urgentPriorityTasks = <TaskModel>[];
+      List<TaskModel> mediumPriorityTasks = <TaskModel>[];
+      List<TaskModel> leastPriorityTasks = <TaskModel>[];
+
+      for (int i = 0; i < tasks.length; i++) {
+        switch (tasks[i].priorityLevel) {
+          case 'Urgent-Priority':
+            urgentPriorityTasks.add(tasks[i]);
+            break;
+          case 'Medium-Priority':
+            mediumPriorityTasks.add(tasks[i]);
+            break;
+          case 'Least-Priority':
+            leastPriorityTasks.add(tasks[i]);
+            break;
+          default:
+        }
+      }
+      emit(ShowTasksLoaded(
+        tasks,
+        urgentPriorityTasks,
+        mediumPriorityTasks,
+        leastPriorityTasks,
+      ));
     } catch (error) {
       emit(ShowTasksError(error.toString()));
     }
@@ -41,7 +64,30 @@ class ShowTasksCubit extends Cubit<ShowTasksState> {
 
       dbService.updateTask(updatedTask);
       final updatedTasks = dbService.loadTasks();
-      emit(ShowTasksLoaded(updatedTasks));
+      List<TaskModel> urgentPriorityTasks = <TaskModel>[];
+      List<TaskModel> mediumPriorityTasks = <TaskModel>[];
+      List<TaskModel> leastPriorityTasks = <TaskModel>[];
+
+      for (int i = 0; i < updatedTasks.length; i++) {
+        switch (updatedTasks[i].priorityLevel) {
+          case 'Urgent-Priority':
+            urgentPriorityTasks.add(updatedTasks[i]);
+            break;
+          case 'Medium-Priority':
+            mediumPriorityTasks.add(updatedTasks[i]);
+            break;
+          case 'Least-Priority':
+            leastPriorityTasks.add(updatedTasks[i]);
+            break;
+          default:
+        }
+      }
+      emit(ShowTasksLoaded(
+        updatedTasks,
+        urgentPriorityTasks,
+        mediumPriorityTasks,
+        leastPriorityTasks,
+      ));
     } catch (error) {
       emit(ShowTasksError(error.toString()));
     }
@@ -52,7 +98,30 @@ class ShowTasksCubit extends Cubit<ShowTasksState> {
     try {
       dbService.deleteTask(task: task);
       final updatedTasks = dbService.loadTasks();
-      emit(ShowTasksLoaded(updatedTasks));
+      List<TaskModel> urgentPriorityTasks = <TaskModel>[];
+      List<TaskModel> mediumPriorityTasks = <TaskModel>[];
+      List<TaskModel> leastPriorityTasks = <TaskModel>[];
+
+      for (int i = 0; i < updatedTasks.length; i++) {
+        switch (updatedTasks[i].priorityLevel) {
+          case 'Urgent-Priority':
+            urgentPriorityTasks.add(updatedTasks[i]);
+            break;
+          case 'Medium-Priority':
+            mediumPriorityTasks.add(updatedTasks[i]);
+            break;
+          case 'Least-Priority':
+            leastPriorityTasks.add(updatedTasks[i]);
+            break;
+          default:
+        }
+      }
+      emit(ShowTasksLoaded(
+        updatedTasks,
+        urgentPriorityTasks,
+        mediumPriorityTasks,
+        leastPriorityTasks,
+      ));
     } catch (error) {
       emit(ShowTasksError(error.toString()));
     }

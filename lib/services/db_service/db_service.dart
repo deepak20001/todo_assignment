@@ -36,7 +36,7 @@ class DbServiceImpl implements DbService {
           combineDateAndTime(task.dueDate, task.addReminder);
       NotificationService.scheduleNotification(
         task.notificationId,
-        task.title,
+        '${task.title} - ${task.priorityLevel}-Task',
         task.description,
         combinedDateTime,
       );
@@ -97,7 +97,7 @@ class DbServiceImpl implements DbService {
             combineDateAndTime(task.dueDate, task.addReminder);
         NotificationService.scheduleNotification(
           task.notificationId,
-          task.title,
+          '${task.title} - ${task.priorityLevel}-Task',
           task.description,
           combinedDateTime,
         );
