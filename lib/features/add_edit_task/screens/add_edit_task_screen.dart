@@ -19,6 +19,7 @@ class AddEditTaskScreen extends StatelessWidget {
     required this.dueDate,
     required this.addReminder,
     required this.isEditingTask,
+    required this.notificationId,
   });
   final String id;
   final String title;
@@ -27,6 +28,7 @@ class AddEditTaskScreen extends StatelessWidget {
   final String dueDate;
   final String addReminder;
   final bool isEditingTask;
+  final int notificationId;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,7 @@ class AddEditTaskScreen extends StatelessWidget {
                       dueDate: cubitData.dueDateController.text,
                       addReminder: cubitData.addReminderController.text,
                       isCompleted: false,
+                      notificationId: notificationId,
                     );
 
                     if (isEditingTask) {

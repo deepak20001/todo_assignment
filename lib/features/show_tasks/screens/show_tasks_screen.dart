@@ -45,6 +45,7 @@ class ShowTasksScreen extends StatelessWidget {
                   dueDate: '',
                   addReminder: '',
                   isEditingTask: false,
+                  notificationId: 0,
                 ),
                 context: context);
           },

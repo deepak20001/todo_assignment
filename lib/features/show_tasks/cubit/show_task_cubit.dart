@@ -48,9 +48,9 @@ class ShowTasksCubit extends Cubit<ShowTasksState> {
   }
 
   /// delete task
-  void deleteTask(String taskId) async {
+  void deleteTask(TaskModel task) async {
     try {
-      dbService.deleteTask(taskId: taskId);
+      dbService.deleteTask(task: task);
       final updatedTasks = dbService.loadTasks();
       emit(ShowTasksLoaded(updatedTasks));
     } catch (error) {

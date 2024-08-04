@@ -22,6 +22,7 @@ void editDeleteBottomSheet(
     useSafeArea: true,
     context: context,
     builder: (BuildContext context) {
+      debugPrint('nfId------------------------------${task.notificationId}');
       return SafeArea(
         child: Container(
           width: double.infinity,
@@ -52,6 +53,7 @@ void editDeleteBottomSheet(
                           dueDate: task.dueDate,
                           addReminder: task.addReminder,
                           isEditingTask: true,
+                          notificationId: task.notificationId,
                         ),
                         context: context);
                   },
@@ -70,7 +72,7 @@ void editDeleteBottomSheet(
                 const Divider(thickness: .3),
                 InkWell(
                   onTap: () {
-                    cubitData.deleteTask(task.id);
+                    cubitData.deleteTask(task);
                     Navigator.pop(context);
                   },
                   child: Row(

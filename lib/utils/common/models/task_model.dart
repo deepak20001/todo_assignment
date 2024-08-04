@@ -9,6 +9,7 @@ class TaskModel {
   final String dueDate;
   final String addReminder;
   bool isCompleted = false;
+  int notificationId;
 
   TaskModel({
     required this.id,
@@ -18,6 +19,7 @@ class TaskModel {
     required this.dueDate,
     required this.addReminder,
     required this.isCompleted,
+    required this.notificationId,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +31,7 @@ class TaskModel {
       'dueDate': dueDate,
       'addReminder': addReminder,
       'isCompleted': isCompleted,
+      'notificationId': notificationId,
     };
   }
 
@@ -41,6 +44,7 @@ class TaskModel {
       dueDate: map['dueDate'] as String,
       addReminder: map['addReminder'] as String,
       isCompleted: map['isCompleted'] as bool,
+      notificationId: map['notificationId'] as int,
     );
   }
 
@@ -57,6 +61,7 @@ class TaskModel {
     String? dueDate,
     String? addReminder,
     bool? isCompleted,
+    int? notificationId,
   }) {
     return TaskModel(
       id: id ?? this.id,
@@ -66,6 +71,7 @@ class TaskModel {
       dueDate: dueDate ?? this.dueDate,
       addReminder: addReminder ?? this.addReminder,
       isCompleted: isCompleted ?? this.isCompleted,
+      notificationId: notificationId ?? this.notificationId,
     );
   }
 }
