@@ -11,7 +11,7 @@ Welcome to the Todo App, a highly efficient and user-friendly task management ap
 - **Add Tasks:** Create tasks with a title, description, priority level (Urgent, Medium, Least), due date, and reminder time.
 - **Set Reminders:** Receive notifications for your tasks at the specified reminder times if they are still incomplete.
 - **Complete Tasks:** Mark tasks as complete once they are done.
-- **Edit and Delete Tasks:** Quickly edit task details or delete tasks, with notifications being updated or cancelled accordingly.
+- **Edit and Delete Tasks:** Quickly edit task details or delete tasks on long pressing a task, with notifications being updated or cancelled accordingly.
 - **Search and Filter:** Search tasks by keywords or titles. Filter tasks based on priority level or due date.
 - **Fast Local Database:** Experience rapid performance with the local database ensuring quick task management operations.
 
